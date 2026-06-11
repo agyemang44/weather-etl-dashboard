@@ -19,3 +19,6 @@ Python, Flask, SQLite, Requests, Chart.js
 5. python app.py
 6. Visit http://localhost:5000
 7. Click "Refresh Data" to run ETL
+
+- Automated ETL: APScheduler runs data pipeline every 3 hours
+- Manual refresh endpoint for on-demand updates
