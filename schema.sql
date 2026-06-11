@@ -1,0 +1,6 @@
+CREATE TABLE weather (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME NOT NULL,
+    temp REAL NOT NULL,
+    description TEXT NOT NULL
+);
