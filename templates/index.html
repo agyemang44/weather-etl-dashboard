@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kumasi Weather Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 900px; margin: 40px auto; padding: 20px; }
+       .card { background: #f0f8ff; padding: 20px; border-radius: 10px; margin: 20px 0; }
+       .chart-container { height: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Weather ETL Dashboard - Kumasi</h1>
+    <a href="/refresh"><button>Refresh Data from API</button></a>
+
+    {% if current %}
+    <div class="card">
+        <h2>Current: {{ "%.1f"|format(current.temp) }}°C</h2>
+        <p>{{ current.description.title() }}</p>
+        <small>Last updated: {{ current.timestamp }}</small>
+    </div>
+    {% endif %}
+
+    <div class="chart-container">
+        <canvas id="tempChart"></canvas>
+    </div>
+
+    <h3>Forecast Data</h3>
+    <table border="1" style="width:100%">
+        <tr><th>Time</th><th>Temp °C</th><th>Condition</th></tr>
+        {% for r in records %}
+        <tr><td>{{ r.timestamp }}</td><td>{{ "%.1f"|format(r.temp) }}</td><td>{{ r.description }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        new Chart(document.getElementById('tempChart'), {
+            type: 'line',
+            data: {
+                labels: {{ timestamps|tojson }},
+                datasets: [{
+                    label: 'Temperature °C',
+                    data: {{ temps|tojson }},
+                    borderColor: '#36A2EB',
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
